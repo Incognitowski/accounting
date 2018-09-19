@@ -31,5 +31,6 @@ Route::prefix('test')->group(function () {
 
     Route::get('/conta','TestController@conta');
     Route::get('/imobilizado','TestController@imobilizado');
+    Route::get('/lancamento','TestController@lancamento');
 
 });
