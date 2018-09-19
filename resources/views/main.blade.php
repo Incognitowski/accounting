@@ -11,8 +11,8 @@
             <div class="h-screen w-full flex items-start justify-center font-sans">
                 <div class="bg-white rounded shadow p-6 m-10 w-full lg:w-3/4 lg:max-w-lg">
                     <div class="mb-10 flex justify-between">
-                        <h1 class="text-grey-darkest">Veículos</h1>
-                        <button class="flex-no-shrink p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green">Novo Veículo</button>
+                        <h1 class="text-grey-darkest">Imobilizados</h1>
+                        <a href="{{ url('/imobilizado/add') }}" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green">Novo Imobilizado</a>
                     </div>
                     <div>
                         <div class="flex mb-4 items-center">
