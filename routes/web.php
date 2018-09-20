@@ -27,6 +27,7 @@ Route::prefix('conta')->group(function () {
 
     Route::get('/','ViewController@conta');
     Route::get('/add','ViewController@addConta');
+    Route::post('/add','PostController@conta');
 
 });
 

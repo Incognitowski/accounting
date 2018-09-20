@@ -21,7 +21,7 @@ class ViewController extends Controller
     }
 
     public function addConta(){
-        $contas = Conta::orderBy('conta_codigo','desc')->get();
+        $contas = Conta::orderBy('conta_codigo','asc')->get();
         return view('add-conta',['contas'=>$contas]);
     }
 }

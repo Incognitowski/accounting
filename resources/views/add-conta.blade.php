@@ -3,6 +3,7 @@
   <title>Accounting v0.1</title>
   <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
   <script type='text/javascript'>
     $(document).ready(function(){
 
@@ -16,6 +17,16 @@
 
         });
 
+        $('#contaForma').ajaxForm({
+            dataType: 'json',
+            success: function(data){
+              window.location.replace(data.conta);
+            },
+            error: function(data){
+              alert('Ocorreu um erro ao inserir esta conta');
+            }
+        }); 
+
 
     });
   </script>
@@ -27,6 +38,8 @@
 
     <div class="h-screen w-full flex items-start justify-center font-sans">
       <div class="bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
+      <form id='contaForma' action="{{ url('/conta/add') }}" method="POST">
+        @csrf
         <div class='flex mb-6'>
           <h1 class="text-grey-darkest">Cadastrar Nova Conta</h1>
         </div>
@@ -63,9 +76,10 @@
         </div>
 
         <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
-          <button class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green">Cadastrar</button>
+          <button class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" type='submit'>Cadastrar</button>
         </div>
 
+      </form>
       </div>
     </div>
   </div>

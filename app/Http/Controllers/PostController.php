@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request as Request;
 use App\Imobilizado as Imobilizado;
+use App\Conta as Conta;
 
 class PostController extends Controller
 {
@@ -31,6 +32,19 @@ class PostController extends Controller
 
         if($imobilizado->save()){
             return response()->json(['success'=>true,'imobilizado'=>url("/imobilizado/".$imobilizado->imob_id)]);
+        }else{
+            return response()->json(['success'=>false]);
+        }
+    }
+
+    public function conta(Request $request){
+        $conta = new Conta();
+        $conta->conta_codigo = $request->input('codigoConta');
+        $conta->conta_descricao = $request->input('descricao');
+        $conta->conta_superconta = $request->input('superConta');
+
+        if($conta->save()){
+            return response()->json(['success'=>true,'conta'=>url("/conta/".$conta->conta_id)]);
         }else{
             return response()->json(['success'=>false]);
         }
