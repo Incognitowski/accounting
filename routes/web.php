@@ -17,13 +17,16 @@ Route::get('/', function () {
 
 Route::prefix('imobilizado')->group(function () {
 
-    Route::get('/', function () {
-        return view('manage-imobilizado');
-    });
+    Route::get('/','ViewController@imobilizado');
+    Route::get('/add','ViewController@addImobilizado');
+    Route::post('/add','PostController@imobilizado');
 
-    Route::get('add', function () {
-        return view('add-imobilizado');
-    });
+});
+
+Route::prefix('conta')->group(function () {
+
+    Route::get('/','ViewController@conta');
+    Route::get('/add','ViewController@addConta');
 
 });
 
