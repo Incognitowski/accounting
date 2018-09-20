@@ -13,6 +13,10 @@ class Custo extends Model
     protected $fillable = ['lancamento_conta', 'lancamento_data','lancamento_imobilizado','lancamento_valor'];
 
     public function conta(){
-        return $this->hasOne('App\Conta','conta_id','lancamento_conta');
+      return $this->hasOne('App\Conta','conta_id','lancamento_conta');
+    }
+
+    public function imobilizado(){
+      return $this->hasOne('App\Imobilizado','imob_id','lancamento_imobilizado');
     }
 }

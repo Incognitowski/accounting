@@ -5,56 +5,56 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
   <script type='text/javascript'>
-    $(document).ready(function(){
+  $(document).ready(function(){
 
-      var template = $('#template-data-field').html();
+    var template = $('#template-data-field').html();
 
 
-      $('#new-data-field').on('click',function(){
-        $('#data-fields').append(template);
-        $('.btn-delete-data-field').unbind('click');
+    $('#new-data-field').on('click',function(){
+      $('#data-fields').append(template);
+      $('.btn-delete-data-field').unbind('click');
 
-        $('.btn-delete-data-field').on('click',function(){
-          $(this).closest('.data-field-parent').remove();
-        });
-
+      $('.btn-delete-data-field').on('click',function(){
+        $(this).closest('.data-field-parent').remove();
       });
-
-      $('#depreciabilidadeSelect').change(function(){
-        
-        if($(this).val()=='true'){
-          $('#vidaUtil').attr('disabled',false);
-        }else{
-          $('#vidaUtil').attr('disabled',true);
-          $('#vidaUtil').val('');
-          $('#taxaDepreciacao').val('');
-        }
-
-      });
-
-      $('#vidaUtil').focusout(function(){
-
-        var taxa = 100/$(this).val();
-        
-        taxa = taxa.toFixed(2) + '% ao Ano';
-
-        $('#taxaDepreciacao').val(taxa);
-
-      });
-
-      $('#imobilizadoForm').ajaxForm({
-            dataType: 'json',
-            success: function(data){
-              window.location.replace(data.imobilizado);
-            },
-            error: function(data){
-              alert('Ocorreu um erro ao inserir este imobilizado');
-            }
-      }); 
-
-
 
     });
+
+    $('#depreciabilidadeSelect').change(function(){
+
+      if($(this).val()=='true'){
+        $('#vidaUtil').attr('disabled',false);
+      }else{
+        $('#vidaUtil').attr('disabled',true);
+        $('#vidaUtil').val('');
+        $('#taxaDepreciacao').val('');
+      }
+
+    });
+
+    $('#vidaUtil').focusout(function(){
+
+      var taxa = 100/$(this).val();
+
+      taxa = taxa.toFixed(2) + '% ao Ano';
+
+      $('#taxaDepreciacao').val(taxa);
+
+    });
+
+    $('#imobilizadoForm').ajaxForm({
+      dataType: 'json',
+      success: function(data){
+        window.location.replace(data.imobilizado);
+      },
+      error: function(data){
+        alert('Ocorreu um erro ao inserir este imobilizado');
+      }
+    });
+
+
+
+  });
   </script>
 </head>
 <body>
@@ -62,10 +62,10 @@
 
     @include('components.sidebar')
 
-    
-      <div class="h-screen w-full flex items-start justify-center font-sans">
-      
-        <div class="bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
+
+    <div class="h-screen w-full flex items-start justify-center font-sans">
+
+      <div class="md:mx-10 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
         <form id='imobilizadoForm' action="{{ url('/imobilizado/add') }}" method="POST">
           @csrf
           <div class='flex mb-6'>
@@ -125,7 +125,7 @@
           <div class='-mx-3 flex flex-col mb-6 w-full'>
             <div class='flex items-center justify-between w-full pb-6'>
               <h3 class="text-grey-darkest ml-3">Dados Gerais</h3>
-              <button id="new-data-field" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green">Nova Informação</button>
+              <button id="new-data-field" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" type="button">Nova Informação</button>
             </div>
             <div id="data-fields">
             </div>
@@ -134,10 +134,10 @@
           <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
             <button class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" type='submit'>Cadastrar</button>
           </div>
-          </form>
-        </div>
-        
+        </form>
       </div>
+
+    </div>
 
   </div>
 </body>

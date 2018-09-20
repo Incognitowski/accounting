@@ -31,6 +31,22 @@ Route::prefix('conta')->group(function () {
 
 });
 
+Route::prefix('custo')->group(function () {
+
+    Route::get('/','ViewController@custo');
+    Route::get('/add','ViewController@addCusto');
+    Route::post('/add','PostController@custo');
+
+});
+
+Route::prefix('receita')->group(function () {
+
+    Route::get('/','ViewController@receita');
+    Route::get('/add','ViewController@addReceita');
+    Route::post('/add','PostController@receita');
+
+});
+
 Route::prefix('test')->group(function () {
 
     Route::get('/conta','TestController@conta');

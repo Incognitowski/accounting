@@ -25,7 +25,7 @@
             error: function(data){
               alert('Ocorreu um erro ao inserir esta conta');
             }
-        }); 
+        });
 
 
     });
@@ -37,7 +37,7 @@
     @include('components.sidebar')
 
     <div class="h-screen w-full flex items-start justify-center font-sans">
-      <div class="bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
+      <div class="md:mx-10 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
       <form id='contaForma' action="{{ url('/conta/add') }}" method="POST">
         @csrf
         <div class='flex mb-6'>
@@ -53,7 +53,7 @@
           </div>
           <div class="md:w-1/2 px-3">
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
-              Grupo de Conta 
+              Grupo de Conta
             </label>
             <div class="relative">
               <select name='superConta' id='superConta' required class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" id="grid-state">
@@ -85,4 +85,3 @@
   </div>
 </body>
 </html>
-
