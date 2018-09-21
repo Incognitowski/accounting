@@ -48,10 +48,14 @@
     $('#imobilizadoForm').ajaxForm({
       dataType: 'json',
       success: function(data){
-        window.location.replace(data.imobilizado);
+        if(data.success){
+          window.location.replace(data.imobilizados);
+        }else{
+            alert('Ocorreu um erro ao atualizar este imobilizado');
+        }
       },
       error: function(data){
-        alert('Ocorreu um erro ao inserir este imobilizado');
+        alert('Ocorreu um erro ao atualizar este imobilizado');
       }
     });
 
@@ -69,8 +73,9 @@
     <div class="flex flex-1 items-start justify-center font-sans">
 
       <div class="md:mx-10 sm:mx-12 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
-        <form id='imobilizadoForm' action="{{ url('/imobilizado/add') }}" method="POST">
+        <form id='imobilizadoForm' action="{{ url('/imobilizado/'.$imobilizadoAtual->imob_id) }}" method="POST">
           @csrf
+          @method('PUT')
           <input type='hidden' name='imobilizado_id' value="{{ $imobilizadoAtual->imob_id }}" />
           <div class='flex mb-6'>
             <h1 class="text-grey-darkest">Cadastrar Novo Imobilizado</h1>
@@ -104,13 +109,13 @@
               </label>
               <div class="relative">
                 @php
-                  if($imobilizadoAtual->imob_depreciavel){
-                    $depreciavel = 'selected';
-                    $ndepreciavel = '';
-                  }else{
-                    $depreciavel = '';
-                    $ndepreciavel = 'selected';
-                  }
+                if($imobilizadoAtual->imob_depreciavel){
+                  $depreciavel = 'selected';
+                  $ndepreciavel = '';
+                }else{
+                  $depreciavel = '';
+                  $ndepreciavel = 'selected';
+                }
                 @endphp
                 <select name='isDepreciavel' id='depreciabilidadeSelect' required class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" id="grid-state">
                   <option value='true' {{ $depreciavel }}>Depreciável</option>
@@ -143,27 +148,27 @@
             <div id="data-fields">
 
               @php
-                $data_fields = json_decode($imobilizadoAtual->imob_dados);
+              $data_fields = json_decode($imobilizadoAtual->imob_dados);
               @endphp
 
               @foreach($data_fields as $index => $field)
-                <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
-                  <div class="flex-1 px-3">
-                    <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
-                      Dado
-                    </label>
-                    <input type='text' name='data_field[]' value="{{ $index }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
-                  </div>
-                  <div class="flex-1 px-3">
-                    <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
-                      Valor
-                    </label>
-                    <input type='text' name='data_value[]' value="{{ $field }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
-                  </div>
-                  <div class='px-3 mt-5'>
-                    <button type='button' class="btn-delete-data-field flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
-                  </div>
+              <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
+                <div class="flex-1 px-3">
+                  <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
+                    Dado
+                  </label>
+                  <input type='text' name='data_field[]' value="{{ $index }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
                 </div>
+                <div class="flex-1 px-3">
+                  <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
+                    Valor
+                  </label>
+                  <input type='text' name='data_value[]' value="{{ $field }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+                </div>
+                <div class='px-3 mt-5'>
+                  <button type='button' class="btn-delete-data-field flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
+                </div>
+              </div>
               @endforeach
 
 

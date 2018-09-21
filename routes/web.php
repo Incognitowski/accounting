@@ -19,7 +19,7 @@ Route::prefix('imobilizado')->group(function () {
     Route::get('/add','ViewController@addImobilizado');
     Route::get('/{imobilizado}','ViewController@editImobilizado');
     Route::post('/add','PostController@imobilizado');
-    Route::put('/','PutController@imobilizado');
+    Route::put('/{imobilizado}','PutController@imobilizado');
 
 });
 
