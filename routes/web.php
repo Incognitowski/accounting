@@ -11,15 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('main');
-});
+Route::get('/','ViewController@main');
 
 Route::prefix('imobilizado')->group(function () {
 
     Route::get('/','ViewController@imobilizado');
     Route::get('/add','ViewController@addImobilizado');
+    Route::get('/{imobilizado}','ViewController@editImobilizado');
     Route::post('/add','PostController@imobilizado');
+    Route::put('/','PutController@imobilizado');
 
 });
 
@@ -27,7 +27,9 @@ Route::prefix('conta')->group(function () {
 
     Route::get('/','ViewController@conta');
     Route::get('/add','ViewController@addConta');
+    Route::get('/{conta}','ViewController@editConta');
     Route::post('/add','PostController@conta');
+    Route::put('/','PutController@conta');
 
 });
 

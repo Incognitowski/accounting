@@ -4,11 +4,11 @@
   <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
 </head>
 <body>
-  <div class="flex bg-grey-lighter w-screen">
+  <div class="flex bg-grey-lighter w-screen h-screen">
 
     @include('components.sidebar')
 
-    <div class="h-screen w-full flex items-start justify-center font-sans">
+    <div class="flex flex-1 items-start justify-center font-sans">
       <div class="bg-white rounded shadow p-6 m-10 w-full lg:w-3/4 lg:max-w-lg">
         <div class="mb-10 flex justify-between">
           <h1 class="text-grey-darkest">Custos</h1>

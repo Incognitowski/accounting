@@ -38,8 +38,9 @@
 
     <div class="flex flex-1 items-start justify-center font-sans">
       <div class="md:mx-10 sm:mx-12 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
-      <form id='contaForma' action="{{ url('/conta/add') }}" method="POST">
+      <form id='contaForma' action="{{ url('/conta') }}" method="PUT">
         @csrf
+        <inpyt type='hidden' name='conta_id' value="{{ $contaAtual->conta_id }}"/>
         <div class='flex mb-6'>
           <h1 class="text-grey-darkest">Cadastrar Nova Conta</h1>
         </div>
@@ -49,7 +50,7 @@
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
               Descrição da conta
             </label>
-            <input name='descricao' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-last-name" type="text" placeholder="Doe">
+            <input name='descricao' value="{{ $contaAtual->conta_descricao }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-last-name" type="text" placeholder="Doe">
           </div>
           <div class="md:w-1/2 px-3 sm:mb-5">
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
@@ -57,9 +58,16 @@
             </label>
             <div class="relative">
               <select name='superConta' id='superConta' required class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" id="grid-state">
-                <option value='' selected>Selecione uma conta</option>
+                <option value=''>Selecione uma conta</option>
                 @foreach($contas as $conta)
-                    <option value='{{ $conta->conta_id }}' data-codigo='{{ $conta->conta_codigo }}'>{{$conta->conta_codigo}} - {{$conta->conta_descricao}}</option>
+                    @php
+                      if($conta->conta_id==$contaAtual->conta_superconta){
+                        $selected = 'selected';
+                      }else{
+                        $selected = '';
+                      }
+                    @endphp
+                    <option value='{{ $conta->conta_id }}' {{ $selected }} data-codigo='{{ $conta->conta_codigo }}'>{{$conta->conta_codigo}} - {{$conta->conta_descricao}}</option>
                 @endforeach
               </select>
               <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
@@ -71,7 +79,7 @@
             <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
               Código da conta
             </label>
-            <input type='text' name='codigoConta' id='codigoConta' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+            <input type='text' name='codigoConta' value="{{ $contaAtual->conta_codigo }}" id='codigoConta' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
           </div>
         </div>
 

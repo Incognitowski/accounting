@@ -22,12 +22,12 @@
   </script>
 </head>
 <body>
-  <div class="flex bg-grey-lighter w-screen">
+  <div class="flex bg-grey-lighter w-screen h-screen">
 
     @include('components.sidebar')
 
-    <div class="h-screen w-full flex items-start justify-center font-sans">
-      <div class="md:mx-10 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
+    <div class="flex flex-1 items-start justify-center font-sans">
+      <div class="md:mx-10 sm:mx-12 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
         <form id='receitaForm' action="{{ url('/receita/add') }}" method="POST">
           @csrf
           <div class='flex mb-6'>
@@ -45,7 +45,7 @@
           @else
 
           <div class="-mx-3 md:flex mb-6">
-            <div class="md:w-1/2 px-3">
+            <div class="md:w-1/2 px-3 sm:mb-5">
               <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
                 Imobilizado
               </label>
@@ -80,7 +80,7 @@
           </div>
 
           <div class="-mx-3 md:flex mb-6">
-            <div class="md:w-1/2 px-3">
+            <div class="md:w-1/2 px-3 sm:mb-5">
               <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
                 Data de lançamento
               </label>
