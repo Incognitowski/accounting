@@ -41,7 +41,7 @@
     <!-- SECTION 4 -->
     <div class="uppercase tracking-wide text-c2 mb-1 mt-4" >Relatórios</div>
     <div class="flex-no-shrink flex cursor-pointer border px-4 py-2 text-lg text-grey-darkest md:text-base" style="border-left: 4px solid #a779e9 !important;">
-      <div class="pl-2">Lucro/Imobilizado</div>
+      <div class="pl-2"><a class='no-underline text-grey-darkest' href="{{ url('/relatorio') }}">Gerar Relatório</a></div>
     </div>
 
   </div>

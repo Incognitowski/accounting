@@ -109,5 +109,108 @@ class ViewController extends Controller
       return view('add-receita',['contas'=>$contas,'imobilizados'=>$imobilizados]);
     }
 
+    public function relatorio(){
+
+      $imobilizados = Imobilizado::all();
+
+      $data_final = Carbon::now()->format('Y-m-d');
+      $data_inicio = Carbon::now()->firstOfYear()->format('Y-m-d');
+
+      $data = [
+        'imobilizados'=>$imobilizados,
+        'data_inicio'=>$data_inicio,
+        'data_final'=>$data_final
+      ];
+
+      return view('build-report',$data);
+    }
+
+    public function relatorioGeral($inicio, $final){
+      $imobilizados = Imobilizado::all();
+
+      $dates = [$inicio, $final];
+      $balanco = 0.0;
+      $depreciacao_imobilizados = 0.0;
+
+      $custos = Custo::whereBetween('lancamento_data',$dates)->get();
+      $receitas = Receita::whereBetween('lancamento_data',$dates)->get();
+
+      foreach ($imobilizados as $imobilizado) {
+        $depreciacao_imobilizados = $depreciacao_imobilizados + $imobilizado->getDepreciacao($inicio, $final);
+      }
+
+      foreach ($receitas as $receita) {
+        $balanco = $balanco + $receita->lancamento_valor;
+      }
+
+      foreach ($custos as $custo) {
+        $balanco = $balanco - $custo->lancamento_valor;
+      }
+
+      $balanco = $balanco - $depreciacao_imobilizados;
+
+      $balanco = number_format((float)$balanco, 2, ',', '.');
+
+      $inicio = Carbon::createFromFormat('Y-m-d',$inicio);
+      $final = Carbon::createFromFormat('Y-m-d',$final);
+
+      $data = [
+        'custos'=>$custos,
+        'receitas'=>$receitas,
+        'data_inicial'=>$inicio->format('d/m/Y'),
+        'data_final'=>$final->format('d/m/Y'),
+        'balanco'=>$balanco,
+        'depreciacao'=>$depreciacao_imobilizados
+      ];
+
+      return view('report-geral',$data);
+
+    }
+
+    public function relatorioImobilizado($imobilizado, $inicio, $final){
+      $imobilizado = Imobilizado::find($imobilizado);
+
+      $dates = [$inicio, $final];
+      $depreciacao_imobilizados = $imobilizado->getDepreciacao($inicio, $final);
+      $balanco = 0.0;
+
+      $custos = Custo::where('lancamento_imobilizado',$imobilizado->imob_id)
+                      ->where(function($query) use ($dates){
+                        $query->whereBetween('lancamento_data',$dates);
+                      })
+                      ->get();
+      $receitas = Receita::where('lancamento_imobilizado',$imobilizado->imob_id)
+                          ->where(function($query) use ($dates){
+                            $query->whereBetween('lancamento_data',$dates);
+                          })
+                          ->get();
+
+      foreach ($receitas as $receita) {
+        $balanco = $balanco + $receita->lancamento_valor;
+      }
+
+      foreach ($custos as $custo) {
+        $balanco = $balanco - $custo->lancamento_valor;
+      }
+
+      $balanco = $balanco - $depreciacao_imobilizados;
+
+      $balanco = number_format((float)$balanco, 2, ',', '.');
+
+      $inicio = Carbon::createFromFormat('Y-m-d',$inicio);
+      $final = Carbon::createFromFormat('Y-m-d',$final);
+
+      $data = [
+        'custos'=>$custos,
+        'receitas'=>$receitas,
+        'data_inicial'=>$inicio->format('d/m/Y'),
+        'data_final'=>$final->format('d/m/Y'),
+        'balanco'=>$balanco,
+        'depreciacao'=>$depreciacao_imobilizados
+      ];
+
+      return view('report-imobilizado',$data);
+    }
+
 
 }

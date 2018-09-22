@@ -53,7 +53,7 @@
                 <select name='imobilizadoReceita' id='imobilizado' required class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" id="grid-state">
                   <option value='' selected>Selecione um imobilizado</option>
                   @foreach($imobilizados as $imobilizado)
-                  <option value="{{ $imobilizado->imob_id }}">{{$imobilizado->imob_id}} - {{$imobilizado->imob_descricao}}</option>
+                    <option value="{{ $imobilizado->imob_id }}">{{$imobilizado->imob_id}} - {{$imobilizado->imob_descricao}}</option>
                   @endforeach
                 </select>
                 <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">

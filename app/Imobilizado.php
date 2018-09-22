@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Carbon\Carbon as Carbon;
 
 class Imobilizado extends Model
 {
@@ -18,6 +19,35 @@ class Imobilizado extends Model
 
     }
 
+    public function getDepreciacao($from, $to){
+      $tz = config('app.timezone');
+      $depreciability = $this->getDepreciabilityRate();
+      $valor = $this->imob_valor;
+
+      $from = Carbon::createFromFormat('Y-m-d',$from);
+      $to = Carbon::createFromFormat('Y-m-d',$to);
+      $aquisicao = Carbon::createFromFormat('Y-m-d',$this->imob_aquisicao);
+
+      if($aquisicao->diffInDays($to,false)<0){
+        return 0;
+      }
+
+      if($aquisicao->diffInDays($from,false)<0){
+        $from = $aquisicao;
+      }
+
+      $days = $from->diffInDays($to);
+
+      for ($i=0; $i < $days; $i++){
+          $valor = $valor - ($valor*$depreciability);
+      }
+
+      $depreciacao = $this->imob_valor - $valor;
+
+      return $depreciacao;
+
+    }
+
     public function getUses(){
 
       $uses = 0;
@@ -29,8 +59,5 @@ class Imobilizado extends Model
 
     }
 
-    public function roundValue($value){
-        return round($value, 2);
-    }
 
 }

@@ -53,10 +53,10 @@ Route::prefix('receita')->group(function () {
 
 });
 
-Route::prefix('test')->group(function () {
+Route::prefix('relatorio')->group(function () {
 
-    Route::get('/conta','TestController@conta');
-    Route::get('/imobilizado','TestController@imobilizado');
-    Route::get('/lancamento','TestController@lancamento');
+    Route::get('/','ViewController@relatorio');
+    Route::get('/inicio/{inicio}/final/{final}','ViewController@relatorioGeral');
+    Route::get('/imobilizado/{imobilizado}/inicio/{inicio}/final/{final}','ViewController@relatorioImobilizado');
 
 });
