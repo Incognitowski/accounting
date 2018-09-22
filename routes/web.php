@@ -20,6 +20,7 @@ Route::prefix('imobilizado')->group(function () {
     Route::get('/{imobilizado}','ViewController@editImobilizado');
     Route::post('/add','PostController@imobilizado');
     Route::put('/{imobilizado}','PutController@imobilizado');
+    Route::delete('/{imobilizado}','DeleteController@imobilizado');
 
 });
 
@@ -39,6 +40,7 @@ Route::prefix('custo')->group(function () {
     Route::get('/','ViewController@custo');
     Route::get('/add','ViewController@addCusto');
     Route::post('/add','PostController@custo');
+    Route::delete('/{custo}','DeleteController@custo');
 
 });
 
@@ -47,6 +49,7 @@ Route::prefix('receita')->group(function () {
     Route::get('/','ViewController@receita');
     Route::get('/add','ViewController@addReceita');
     Route::post('/add','PostController@receita');
+    Route::delete('/{receita}','DeleteController@receita');
 
 });
 

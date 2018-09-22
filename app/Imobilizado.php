@@ -15,7 +15,18 @@ class Imobilizado extends Model
     public function getDepreciabilityRate(){
 
         return round((1 / $this->imob_vida_util)/365,7);
-        
+
+    }
+
+    public function getUses(){
+
+      $uses = 0;
+
+      $uses = $uses + Custo::where('lancamento_imobilizado', $this->imob_id)->count();
+      $uses = $uses + Receita::where('lancamento_imobilizado', $this->imob_id)->count();
+
+      return $uses;
+
     }
 
     public function roundValue($value){
