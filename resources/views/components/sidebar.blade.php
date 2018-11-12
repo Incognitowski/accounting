@@ -4,6 +4,9 @@
     <a href="{{ url('/') }}" class="no-underline flex-no-shrink flex w-auto cursor-pointer border px-4 py-2 md:text-base text-lg text-grey-darkest" style="border-left: 4px solid #dae1e7 !important;">
       <div class="pl-2 text-grey-darkest">Página Principal</div>
     </a>
+    <a href="{{ url('/params') }}" class="no-underline flex-no-shrink flex w-auto cursor-pointer border px-4 py-2 md:text-base text-lg text-grey-darkest" style="border-left: 4px solid #dae1e7 !important;">
+      <div class="pl-2 text-grey-darkest">Parâmetros</div>
+    </a>
     <!-- SECTION 1 -->
     <div class="uppercase tracking-wide text-c2 mb-1 mt-4">Receitas</div>
     <a href="{{ url('/receita/add') }}" class=" no-underline text-grey-darkest flex-no-shrink flex w-auto cursor-pointer border px-4 py-2 md:text-base text-lg text-grey-darkest" style="border-left: 4px solid #51d88a !important;">
