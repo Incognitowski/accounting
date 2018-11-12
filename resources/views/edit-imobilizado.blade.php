@@ -130,7 +130,7 @@
               <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
                 Vida Útil (Anos)
               </label>
-              <input name='vidaUtil' id='vidaUtil' @if(!$imobilizadoAtual->imob_depreciavel) disabled @endif value="{{ $imobilizadoAtual->imob_vida_util }}" required type='number' step='1' class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+              <input name='vidaUtil' min="1" id='vidaUtil' @if(!$imobilizadoAtual->imob_depreciavel) disabled @endif value="{{ $imobilizadoAtual->imob_vida_util }}" required type='number' step='1' class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
             </div>
             <div class="md:w-1/2 px-3">
               <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
