@@ -60,3 +60,5 @@ Route::prefix('relatorio')->group(function () {
     Route::get('/imobilizado/{imobilizado}/inicio/{inicio}/final/{final}','ViewController@relatorioImobilizado');
 
 });
+
+Route::get("params","ViewController@parametros");

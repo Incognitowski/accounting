@@ -212,5 +212,4 @@ class ViewController extends Controller
       return view('report-imobilizado',$data);
     }
 
-
 }
