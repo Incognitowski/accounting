@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(INSSTableSeeder::class);
         $this->call(IRRFTableSeeder::class);
         $this->call(SalarioFamiliaTableSeeder::class);
+        $this->call(ParametroTableSeeder::class);
     }
 }

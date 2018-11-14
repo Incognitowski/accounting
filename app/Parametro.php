@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parametro extends Model
 {
-    protected $table = "Parametro";
-    protected $primaryKey = "Parametro_id";
+    protected $table = "parametro";
+    protected $primaryKey = "parametro_id";
     public $timestamps = false;
 
     protected $fillable = [
-        "Parametro_salario_minimo",
-        "Parametro_abate_dependente",
-        "Parametro_fgts",
-        "Parametro_data_inicio",
-        "Parametro_data_fim"
+        "parametro_salario_minimo",
+        "parametro_abate_dependente",
+        "parametro_fgts",
+        "parametro_data_inicio",
+        "parametro_data_fim"
     ];
 
 }

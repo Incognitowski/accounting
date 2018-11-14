@@ -17,8 +17,8 @@ class Parametro extends Migration
             CREATE TABLE Parametro(
                 Parametro_id serial NOT NULL,
                 Parametro_salario_minimo float NOT NULL,
-                Parametros_abate_dependente float NOT NULL,
-                Parametro_fgts integer NOT NULL,
+                Parametro_abate_dependente float NOT NULL,
+                Parametro_fgts float NOT NULL,
                 Parametro_data_inicio date NOT NULL,
                 Parametro_data_fim date,
                 CONSTRAINT Parametro_pk PRIMARY KEY (Parametro_id)
