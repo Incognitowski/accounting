@@ -12,5 +12,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(ContasPrimarias::class);
+        $this->call(INSSTableSeeder::class);
+        $this->call(IRRFTableSeeder::class);
+        $this->call(SalarioFamiliaTableSeeder::class);
     }
 }

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class INSS extends Model
 {
-    protected $table = "INSS";
-    protected $primaryKey = "INSS_id";
+    protected $table = "inss";
+    protected $primaryKey = "inss_id";
     public $timestamps = false;
 
     protected $fillable = [
-        "INSS_data_inicio",
-        "INSS_data_fim",
-        "INSS_dados"
+        "inss_data_inicio",
+        "inss_data_fim",
+        "inss_dados"
     ];
 }

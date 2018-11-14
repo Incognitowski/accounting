@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class SalarioFamilia extends Model
 {
-    protected $table = "SalarioFamilia";
-    protected $primaryKey = "SalarioFamilia_id";
+    protected $table = "salariofamilia";
+    protected $primaryKey = "salariofamilia_id";
     public $timestamps = false;
 
     protected $fillable = [
-        "SalarioFamilia_data_inicio",
-        "SalarioFamilia_data_fim",
-        "SalarioFamilia_dados"
+        "salariofamilia_data_inicio",
+        "salariofamilia_data_fim",
+        "salariofamilia_dados"
     ];
 
 }
