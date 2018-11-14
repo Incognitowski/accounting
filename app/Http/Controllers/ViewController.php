@@ -9,6 +9,11 @@ use App\Receita;
 use App\Imobilizado;
 use Carbon\Carbon as Carbon;
 
+use App\INSS;
+use App\IRRF;
+use App\SalarioFamilia;
+use App\Parametro;
+
 class ViewController extends Controller
 {
     public function main(){
@@ -210,6 +215,24 @@ class ViewController extends Controller
       ];
 
       return view('report-imobilizado',$data);
+    }
+
+    public function parametros(){
+
+      $inss = INSS::orderBy('inss_data_inicio', 'desc')->first();
+      $irrf = IRRF::orderBy('irrf_data_inicio', 'desc')->first();
+      $parametro = Parametro::orderBy('parametro_data_inicio', 'desc')->first();
+      $salario_familia = SalarioFamilia::orderBy('salariofamilia_data_inicio', 'desc')->first();
+
+      $data = [
+        "irrf" => $inss,
+        "inss" => $irrf,
+        "parametro" => $parametro,
+        "salario_familia" => $salario_familia
+      ];
+
+      return view("parametros",$data);
+
     }
 
 }
