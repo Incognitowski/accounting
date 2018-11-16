@@ -62,3 +62,5 @@ Route::prefix('relatorio')->group(function () {
 });
 
 Route::get("params","ViewController@parametros");
+
+Route::post('feriados','FeriadoController@add');

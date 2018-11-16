@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feriado extends Model
 {
-    protected $table = "Feriado";
-    protected $primaryKey = "Feriado_id";
+    protected $table = "feriado";
+    protected $primaryKey = "feriado_id";
     public $timestamps = false;
 
     protected $fillable = [
-        "Feriado_data",
-        "Feriado_nome",
-        "Feriado_tipo"
+        "feriado_data",
+        "feriado_nome",
+        "feriado_tipo"
     ];
 }

@@ -18,7 +18,6 @@ class Feriado extends Migration
                 Feriado_id serial NOT NULL,
                 Feriado_data date NOT NULL,
                 Feriado_nome varchar(500) NOT NULL,
-                Feriado_tipo varchar(250) NOT NULL,
                 CONSTRAINT Feriado_pk PRIMARY KEY (Feriado_id)
             
             );

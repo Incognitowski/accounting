@@ -13,6 +13,7 @@ use App\INSS;
 use App\IRRF;
 use App\SalarioFamilia;
 use App\Parametro;
+use App\Feriado;
 
 class ViewController extends Controller
 {
@@ -223,16 +224,18 @@ class ViewController extends Controller
       $irrf = IRRF::orderBy('irrf_data_inicio', 'desc')->first();
       $parametro = Parametro::orderBy('parametro_data_inicio', 'desc')->first();
       $salario_familia = SalarioFamilia::orderBy('salariofamilia_data_inicio', 'desc')->first();
+      $feriados = Feriado::whereYear('feriado_data',Carbon::now()->year)->get();
 
       $data = [
-        "irrf" => $inss,
-        "inss" => $irrf,
+        "inss" => $inss,
+        "irrf" => $irrf,
         "parametro" => $parametro,
-        "salario_familia" => $salario_familia
+        "salario_familia" => $salario_familia,
+        "feriado" => $feriados
       ];
 
       return view("parametros",$data);
 
-    }
+    } 
 
 }
