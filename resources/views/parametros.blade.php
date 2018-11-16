@@ -16,10 +16,20 @@
       var calendar_api_url = "https://api.calendario.com.br/?json=true&ano="+year+"&ibge=4128203&token=anVuaW9yLnp5dGtvd3NraUBnbWFpbC5jb20maGFzaD0xNzE1OTM3NQ";
 
       var current_inss = JSON.parse($("#current_inss").val());
-      var current_inss = JSON.parse($("#current_irrf").val());
-      var current_inss = JSON.parse($("#current_salfam").val());
-      var current_inss = JSON.parse($("#current_feriado").val());
+      var current_irrf = JSON.parse($("#current_irrf").val());
+      var current_salfam = JSON.parse($("#current_salfam").val());
+      var current_feriado = JSON.parse($("#current_feriado").val());
 
+      current_feriado.map(function(item){
+        var new_feriado_row = template_feriado;
+        new_feriado_row = new_feriado_row.replace('tpl_nome',item.feriado_nome);
+        new_feriado_row = new_feriado_row.replace('tpl_data',item.feriado_data);
+        $('#feriado_table_container').append(new_feriado_row);
+      });
+
+      $(".btn-delete-feriado-row").on('click',function(){
+          $(this).closest('.data-field-parent').remove();
+        });
 
       $("#new-inss").on('click',function(){
         $('#inss_table_container').append(template_inss);
@@ -76,6 +86,18 @@
             });
 
             feriados_validos.map(function(item){
+
+              var already_exists = false;
+
+              current_feriado.map(function(feriado){
+                if(feriado.feriado_data == item.date){
+                  already_exists = true;
+                }
+              });
+
+              if(already_exists){
+                return null;
+              }
 
               var new_feriado_row = template_feriado;
               var data = item.date;
@@ -366,7 +388,7 @@
     </div>
 
     <div class='px-3 mt-5'>
-      <button class="btn-delete-feriado-row flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
+      <button type="button" class="btn-delete-feriado-row flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
     </div>
   </div>
 

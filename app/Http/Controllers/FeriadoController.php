@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Feriado;
+use Carbon\Carbon;
 
 class FeriadoController extends Controller
 {
@@ -17,6 +18,8 @@ class FeriadoController extends Controller
     		$feriado['data'] = $req->input('feriado_data')[$index];
     		$feriados[] = $feriado;
     	}
+
+		Feriado::whereYear('feriado_data',Carbon::now()->year)->delete();
 
     	foreach ($feriados as $feriado) {
     		Feriado::whereDate('feriado_data',$feriado['data'])->delete();
