@@ -15,9 +15,9 @@ class INSSTableSeeder extends Seeder
     {
     	$data_hoje = Carbon::now();
         $data = [
-        	"1" => ["min"=>0, "max"=>1693.72, "aliquota"=> 0.08],
-        	"2" => ["min"=>1693.73, "max"=>2822.90, "aliquota"=> 0.09],
-        	"3" => ["min"=>2822.90, "max"=>5645.80, "aliquota"=> 0.11]
+        	["min"=>0, "max"=>1693.72, "aliquota"=> 0.08],
+        	["min"=>1693.73, "max"=>2822.90, "aliquota"=> 0.09],
+        	["min"=>2822.90, "max"=>5645.80, "aliquota"=> 0.11]
         ];
 
         $inss = new INSS();

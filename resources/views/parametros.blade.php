@@ -6,12 +6,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      var template_inss = $('#inss_table_element').html();
-      var template_irrf = $('#irrf_table_element').html();
-      var template_salfam = $("#salfam_table_element").html();
-      var template_feriado = $("#feriado_table_element").html();
+      var inss_template = Handlebars.compile($('#inss_table_element').html());
+      var irrf_template = Handlebars.compile($('#irrf_table_element').html());
+      var salfam_template = Handlebars.compile($('#salfam_table_element').html());
+      var feriado_template = Handlebars.compile($('#feriado_table_element').html());
       var year = (new Date()).getFullYear();
       var calendar_api_url = "https://api.calendario.com.br/?json=true&ano="+year+"&ibge=4128203&token=anVuaW9yLnp5dGtvd3NraUBnbWFpbC5jb20maGFzaD0xNzE1OTM3NQ";
 
@@ -21,18 +22,43 @@
       var current_feriado = JSON.parse($("#current_feriado").val());
 
       current_feriado.map(function(item){
-        var new_feriado_row = template_feriado;
-        new_feriado_row = new_feriado_row.replace('tpl_nome',item.feriado_nome);
-        new_feriado_row = new_feriado_row.replace('tpl_data',item.feriado_data);
-        $('#feriado_table_container').append(new_feriado_row);
+        var new_feriado = feriado_template(item);
+        $('#feriado_table_container').append(new_feriado);
+      });
+
+      current_inss.map(function(item){
+        var new_inss = inss_template(item);
+        $('#inss_table_container').append(new_inss);
+      });
+
+      current_irrf.map(function(item){
+        var new_irrf = irrf_template(item);
+        $("#irrf_table_container").append(new_irrf);
+      });
+
+      current_salfam.map(function(item){
+        $("#salfam_table_container").append(salfam_template(item));
       });
 
       $(".btn-delete-feriado-row").on('click',function(){
+        $(this).closest('.data-field-parent').remove();
+      });
+
+      $(".btn-delete-inss-row").on('click',function(){
+        $(this).closest('.data-field-parent').remove();
+      });
+
+      $(".btn-delete-irrf-row").on('click',function(){
+        $(this).closest('.data-field-parent').remove();
+      });
+
+      $(".btn-delete-salfam-row").on('click',function(){
           $(this).closest('.data-field-parent').remove();
         });
 
       $("#new-inss").on('click',function(){
-        $('#inss_table_container').append(template_inss);
+        var new_inss = {};
+        $('#inss_table_container').append(inss_template(new_inss));
         $(".btn-delete-inss-row").unbind("click");
 
         $(".btn-delete-inss-row").on('click',function(){
@@ -41,7 +67,8 @@
       });
 
       $("#new-irrf").on('click',function(){
-        $('#irrf_table_container').append(template_irrf);
+        var new_irrf = {};
+        $('#irrf_table_container').append(irrf_template(new_irrf));
         $(".btn-delete-irrf-row").unbind("click");
 
         $(".btn-delete-irrf-row").on('click',function(){
@@ -50,7 +77,8 @@
       });
 
       $("#new-salfam").on('click',function(){
-        $('#salfam_table_container').append(template_salfam);
+        var new_salfam = {};
+        $('#salfam_table_container').append(salfam_template(new_salfam));
         $(".btn-delete-salfam-row").unbind("click");
 
         $(".btn-delete-salfam-row").on('click',function(){
@@ -59,10 +87,8 @@
       });
 
       $("#new-feriado").on('click',function(){
-        var tpl = template_feriado;
-        tpl = tpl.replace('tpl_nome','');
-        tpl = tpl.replace('tpl_data','');
-        $('#feriado_table_container').append(template_feriado);
+        var new_feriado = {};
+        $('#feriado_table_container').append(feriado_template(new_feriado));
         $(".btn-delete-feriado-row").unbind("click");
 
         $(".btn-delete-feriado-row").on('click',function(){
@@ -99,13 +125,15 @@
                 return null;
               }
 
-              var new_feriado_row = template_feriado;
               var data = item.date;
               data = data.split("/");
               data = data[2] + "-" + data[1] + "-" + data[0];
-              new_feriado_row = new_feriado_row.replace('tpl_nome',item.name);
-              new_feriado_row = new_feriado_row.replace('tpl_data',data);
-              $('#feriado_table_container').append(new_feriado_row);
+              
+              var feriado = {
+                feriado_nome: item.name,
+                feriado_data: data
+              };
+              $('#feriado_table_container').append(feriado_template(feriado));
 
             });
           }
@@ -117,8 +145,8 @@
         success: function(data){
           if(data.success){
             iziToast.success({
-                title: 'OK',
-                message: 'Feriados Atualizados com Sucesso',
+              title: 'OK',
+              message: 'Feriados Atualizados com Sucesso',
             });
           }
         },
@@ -150,14 +178,14 @@
           <div class='flex flex-row'>
             <div class="md:w-1/2 px-3 sm:mb-5">
               <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                Salário Mínimo
+                Salário Mínimo (R$)
               </label>
               <input name='salario_minimo' value="{{ $parametro->parametro_salario_minimo }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" min="0" type="number" step="0.01">
             </div>
 
             <div class="md:w-1/2 px-3 sm:mb-5">
               <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                Abate por Dependente (IRRF)
+                Abate por Dependente (R$) - IRRF
               </label>
               <input name='abate_dependente' value="{{ $parametro->parametro_abate_dependente }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" min="0" type="number" step="0.01">
             </div>
@@ -270,97 +298,97 @@
 </body>
 </html>
 
-<script type="text/template" id="inss_table_element">
+<script type="text/x-handlebars-template" id="inss_table_element">
 
   <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Mínimo
+        Mínimo (R$)
       </label>
-      <input type='number' step="0.01" min="0" name='data_minimo[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" name='data_minimo[]' value="@{{ min }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Máximo
+        Máximo (R$)
       </label>
-      <input type='number' step="0.01" min="0" name='data_maximo[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" name='data_maximo[]' value="@{{ max }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Alíquota
+        Alíquota (%)
       </label>
-      <input type='number' step="0.01" min="0" max="100" name='data_aliquota[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" max="100" name='data_aliquota[]' value="@{{ aliquota }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class='px-3 mt-5'>
-      <button class="btn-delete-inss-row flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
+      <button type="button" class="btn-delete-inss-row flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
     </div>
   </div>
 
 </script>
 
-<script type="text/template" id="irrf_table_element">
+<script type="text/x-handlebars-template" id="irrf_table_element">
 
   <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Mínimo
+        Mínimo (R$)
       </label>
-      <input type='number' step="0.01" min="0" name='data_minimo[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" name='data_minimo[]' value="@{{ min }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Máximo
+        Máximo (R$)
       </label>
-      <input type='number' step="0.01" min="0" name='data_maximo[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" name='data_maximo[]' value="@{{ max }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Alíquota
+        Alíquota (%)
       </label>
-      <input type='number' step="0.01" min="0" max="100" name='data_aliquota[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" max="100" name='data_aliquota[]' value="@{{ aliquota }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Desconto
+        Desconto (R$)
       </label>
-      <input type='number' step="0.01" min="0" name='data_desconto[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" name='data_desconto[]' value="@{{ parcela_a_deduzir }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class='px-3 mt-5'>
-      <button class="btn-delete-irrf-row flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
+      <button type="button" class="btn-delete-irrf-row flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
     </div>
   </div>
 
 </script>
 
-<script type="text/template" id="salfam_table_element">
+<script type="text/x-handlebars-template" id="salfam_table_element">
 
   <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Mínimo
+        Mínimo (R$)
       </label>
-      <input type='number' step="0.01" min="0" name='data_minimo[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" name='data_minimo[]' value="@{{ min }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Máximo
+        Máximo (R$)
       </label>
-      <input type='number' step="0.01" min="0" name='data_maximo[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" name='data_maximo[]' value="@{{ max }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-        Valor
+        Valor (R$)
       </label>
-      <input type='number' step="0.01" min="0" max="100" name='data_valor[]' required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='number' step="0.01" min="0" name='data_valor[]' value="@{{ valor }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class='px-3 mt-5'>
@@ -370,21 +398,21 @@
 
 </script>
 
-<script type="text/template" id="feriado_table_element">
+<script type="text/x-handlebars-template" id="feriado_table_element">
 
   <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
         Nome
       </label>
-      <input type='text' name='feriado_nome[]' value='tpl_nome' required class="feriado_nome appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='text' name='feriado_nome[]' value='@{{ feriado_nome }}' required class="feriado_nome appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class="flex-1 px-3">
       <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
         Data
       </label>
-      <input type='date' name='feriado_data[]' required value='tpl_data' class="feriado_data appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+      <input type='date' name='feriado_data[]' required value='@{{ feriado_data }}' class="feriado_data appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
     </div>
 
     <div class='px-3 mt-5'>

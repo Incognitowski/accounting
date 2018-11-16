@@ -16,8 +16,8 @@ class SalarioFamiliaTableSeeder extends Seeder
         $data_hoje = Carbon::now();
 
         $data = [
-        	"1"=>["min"=>0, "max"=>877.67, "valor"=>45],
-        	"2"=>["min"=>877.68, "max"=>1319.18, "valor"=>31.71]
+        	["min"=>0, "max"=>877.67, "valor"=>45],
+        	["min"=>877.68, "max"=>1319.18, "valor"=>31.71]
         ];
 
         $SalarioFamilia = new SalarioFamilia();
