@@ -179,6 +179,30 @@
         }
       });
 
+      $('#form_irrf').ajaxForm({
+        dataType: 'json',
+        success: function(data){
+          if(data.success){
+
+            iziToast.success({
+              title: 'OK',
+              message: 'IRRF foi atualizado com sucesso.',
+            });
+
+          }else{
+
+            iziToast.error({
+              title: 'Erro',
+              message: 'IRRF não foi atualizado.',
+            });
+
+          }
+        },
+        error: function(data){
+          alert('Ocorreu um erro ao atualizar os feriados.');
+        }
+      });
+
     });
   </script>
 </head>
@@ -265,7 +289,7 @@
       <div id='irrf_table_container'></div>
 
       <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
-        <button id="update_irrf" type="button" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
+        <button id="update_irrf" type="submit" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
         type='submit'>
         Atualizar
       </button>

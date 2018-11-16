@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon; 
 use App\INSS;
 
-class INSSCOntroller extends Controller
+class INSSController extends Controller
 {
     public function add(Request $req){
 
