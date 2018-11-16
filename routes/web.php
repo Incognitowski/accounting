@@ -64,3 +64,7 @@ Route::prefix('relatorio')->group(function () {
 Route::get("params","ViewController@parametros");
 
 Route::post('feriados','FeriadoController@add');
+Route::post('inss','INSSController@add');
+Route::post('irrf','IRRFController@add');
+Route::post('salario_familia','SalarioFamiliaController@add');
+Route::post('parametros','ParametroController@add');

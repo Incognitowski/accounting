@@ -128,7 +128,7 @@
               var data = item.date;
               data = data.split("/");
               data = data[2] + "-" + data[1] + "-" + data[0];
-              
+
               var feriado = {
                 feriado_nome: item.name,
                 feriado_data: data
@@ -148,6 +148,30 @@
               title: 'OK',
               message: 'Feriados Atualizados com Sucesso',
             });
+          }
+        },
+        error: function(data){
+          alert('Ocorreu um erro ao atualizar os feriados.');
+        }
+      });
+
+      $('#form_inss').ajaxForm({
+        dataType: 'json',
+        success: function(data){
+          if(data.success){
+
+            iziToast.success({
+              title: 'OK',
+              message: 'INSS foi atualizado com sucesso.',
+            });
+
+          }else{
+
+            iziToast.error({
+              title: 'Erro',
+              message: 'INSS não foi atualizado.',
+            });
+
           }
         },
         error: function(data){
@@ -221,7 +245,7 @@
         </div>
 
         <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
-          <button id="update_inss" type="button" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
+          <button id="update_inss" type="submit" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
           type='submit'>
           Atualizar
         </button>

@@ -226,6 +226,18 @@ class ViewController extends Controller
       $salario_familia = SalarioFamilia::orderBy('salariofamilia_data_inicio', 'desc')->first();
       $feriados = Feriado::whereYear('feriado_data',Carbon::now()->year)->get();
 
+      $tabela_inss = json_decode($inss->inss_dados);
+      foreach ($tabela_inss as $inss) {
+        $inss->aliquota = $inss->aliquota * 100;
+      }
+      $inss->inss_dados = json_encode($tabela_inss);
+
+      $tabela_irrf = json_decode($irrf->irrf_dados);
+      foreach ($tabela_irrf as $irrf) {
+        $irrf->aliquota = $irrf->aliquota * 100;
+      }
+      $irrf->irrf_dados = json_encode($tabela_irrf);
+
       $data = [
         "inss" => $inss,
         "irrf" => $irrf,
