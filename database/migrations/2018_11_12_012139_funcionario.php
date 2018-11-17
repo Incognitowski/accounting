@@ -19,11 +19,11 @@ class Funcionario extends Migration
                 Funcionario_nome varchar(500) NOT NULL,
                 Funcionario_cargo varchar(500) NOT NULL,
                 Funcionario_dependentes integer NOT NULL,
-                Funcionario_insalubridade integer NOT NULL,
+                Funcionario_insalubridade float NOT NULL,
                 Funcionario_salario_base float NOT NULL,
                 Funcionario_filhos_menores integer NOT NULL,
                 Funcionario_inativo boolean NOT NULL DEFAULT false,
-                Funcionario_abate_inss boolean NOT NULL DEFAULT false,
+                Funcionario_recolhe_inss boolean NOT NULL DEFAULT true,
                 CONSTRAINT Funcionario_pk PRIMARY KEY (Funcionario_id)
             );
         ");

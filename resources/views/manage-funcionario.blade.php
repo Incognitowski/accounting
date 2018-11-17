@@ -63,7 +63,7 @@
           <div class="flex mb-4 items-center border-b pb-2">
             <p class="w-full text-grey-darkest">Funcionário #{{ $funcionario->funcionario_id }} - {{ $funcionario->funcionario_nome  }}</p>
             <a href="{{ url('/funcionario/'.$funcionario->funcionario_id) }}" class="no-underline flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-teal border-teal hover:bg-teal">Editar</a>
-            <button data-imob-id="{{ $funcionario->funcionario_id }}" class="delete-imob flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
+            <button data-func-id="{{ $funcionario->funcionario_id }}" class="delete-funcionario flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
           </div>
           @endforeach
 

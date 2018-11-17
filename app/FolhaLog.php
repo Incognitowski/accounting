@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class FolhaLog extends Model
 {
-    protected $table = "FolhaLog";
-    protected $primaryKey = "FolhaLog_id";
+    protected $table = "folhalog";
+    protected $primaryKey = "folhalog_id";
     public $timestamps = false;
 
     protected $fillable = [
-        "FolhaLog_funcionario",
-        "FolhaLog_data",
-        "FolhaLog_dados"
+        "folhalog_funcionario",
+        "folhalog_data",
+        "folhalog_dados"
     ];
 }

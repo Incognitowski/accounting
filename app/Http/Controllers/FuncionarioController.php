@@ -54,4 +54,24 @@ class FuncionarioController extends Controller
 
     }
 
+    public function add(Request $req){
+
+    	$funcionario = new Funcionario();
+    	$funcionario->funcionario_nome = $req->input('funcionario_nome');
+    	$funcionario->funcionario_cargo = $req->input('funcionario_cargo');
+    	$funcionario->funcionario_dependentes = $req->input('funcionario_dependentes');
+    	$funcionario->funcionario_filhos_menores = $req->input('funcionario_filhos_menores');
+    	$funcionario->funcionario_insalubridade = $req->input('funcionario_insalubridade')/100;
+    	$funcionario->funcionario_inativo = $req->input('funcionario_inativo');
+    	$funcionario->funcionario_recolhe_inss = $req->input('funcionario_recolhe_inss');
+    	$funcionario->funcionario_salario_base = $req->input('funcionario_salario_base');
+
+    	if($funcionario->save()){
+    		return response()->json(['success'=>true, 'funcionario'=>url('/funcionario/'.$funcionario->funcionario_id)]);
+    	}else{
+    		return response()->json(['success'=>false]);
+    	}
+
+    }
+
 }
