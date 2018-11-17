@@ -18,4 +18,9 @@ class Parametro extends Model
         "parametro_data_fim"
     ];
 
+    public static function getLatest(){
+        return Parametro::orderBy('parametro_data_inicio', 'desc')->where('parametro_data_fim',null)->first();
+    }
+
 }
+

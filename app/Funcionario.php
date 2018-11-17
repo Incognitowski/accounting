@@ -50,4 +50,20 @@ class Funcionario extends Model
         return $valor_vales;
     }
 
+    public function hasFolhaThisMonth(){
+        $data_hoje = Carbon::now();
+
+        $folhas_esse_mes = $this->folhas_de_pagamento()->whereMonth('folhalog_data',$data_hoje->month)->whereYear('folhalog_data',$data_hoje->year)->get();
+        if(count($folhas_esse_mes)>0){
+            return true;
+        }               
+        return false;         
+    }
+
+    public function getLatestFolha(){
+        $data_hoje = Carbon::now();
+        $latest_folha = $this->folhas_de_pagamento()->whereMonth('folhalog_data',$data_hoje->month)->whereYear('folhalog_data',$data_hoje->year)->first();
+        return $latest_folha;                      
+    }
+
 }

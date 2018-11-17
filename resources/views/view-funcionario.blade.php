@@ -208,7 +208,7 @@
             </div>
 
             <div class='px-3 mt-5'>
-              <button type="button" data-id-folha="{{ $vale->vale_id }}" class="btn-delete-vale flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
+              <button type="button" data-id-vale="{{ $vale->vale_id }}" class="btn-delete-vale flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
             </div>
           </div>
 

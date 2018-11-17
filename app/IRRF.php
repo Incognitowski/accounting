@@ -16,4 +16,8 @@ class IRRF extends Model
     	"irrf_dados"
 	];
 
+	public static function getLatest(){
+		return IRRF::orderBy('irrf_data_inicio', 'desc')->where('irrf_data_fim',null)->first();
+	}
+
 }

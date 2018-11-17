@@ -16,4 +16,8 @@ class SalarioFamilia extends Model
         "salariofamilia_dados"
     ];
 
+    public static function getLatest(){
+    	return SalarioFamilia::orderBy('salariofamilia_data_inicio', 'desc')->where('salariofamilia_data_fim',null)->first();
+    }
+
 }

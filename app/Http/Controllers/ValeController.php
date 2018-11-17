@@ -24,6 +24,10 @@ class ValeController extends Controller
 
     public function delete(Vale $vale){
 
+        if($vale->hasBeenUsedInFolha()){
+            return response()->json(['success'=>true,'msg'=>'Vale já foi utilizado em uma folha de pagamento.']);
+        }
+
     	if($vale->delete()){
     		return response()->json(['success'=>true]);
     	}else{

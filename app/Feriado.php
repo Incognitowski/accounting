@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Feriado extends Model
 {
@@ -15,4 +16,9 @@ class Feriado extends Model
         "feriado_nome",
         "feriado_tipo"
     ];
+
+
+    public static function getFromCurrentYear(){
+    	return Feriado::whereYear('feriado_data',Carbon::now()->year)->get();
+    }
 }

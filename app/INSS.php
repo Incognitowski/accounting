@@ -15,4 +15,8 @@ class INSS extends Model
         "inss_data_fim",
         "inss_dados"
     ];
+
+    public static function getLatest(){
+    	return INSS::orderBy('inss_data_inicio', 'desc')->where('inss_data_fim',null)->first();
+    }
 }

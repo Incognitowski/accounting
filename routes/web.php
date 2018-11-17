@@ -89,6 +89,7 @@ Route::prefix('vale')->group(function () {
 
 Route::prefix('folha')->group(function() {
 
+    Route::post('add','FolhaController@insert');
     Route::get('add/{funcionario}','FolhaController@add');
     Route::get('{folha}','FolhaController@view');
 

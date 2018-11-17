@@ -220,11 +220,11 @@ class ViewController extends Controller
 
     public function parametros(){
 
-      $inss = INSS::orderBy('inss_data_inicio', 'desc')->where('inss_data_fim',null)->first();
-      $irrf = IRRF::orderBy('irrf_data_inicio', 'desc')->where('irrf_data_fim',null)->first();
-      $parametro = Parametro::orderBy('parametro_data_inicio', 'desc')->where('parametro_data_fim',null)->first();
-      $salario_familia = SalarioFamilia::orderBy('salariofamilia_data_inicio', 'desc')->where('salariofamilia_data_fim',null)->first();
-      $feriados = Feriado::whereYear('feriado_data',Carbon::now()->year)->get();
+      $inss = INSS::getLatest();
+      $irrf = IRRF::getLatest();
+      $parametro = Parametro::getLatest();
+      $salario_familia = SalarioFamilia::getLatest();
+      $feriados = Feriado::getFromCurrentYear();
 
       $tabela_inss = json_decode($inss->inss_dados);
       foreach ($tabela_inss as $inss) {

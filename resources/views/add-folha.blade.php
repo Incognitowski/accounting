@@ -20,7 +20,7 @@
 
     @include('components.sidebar')
 
-    <div class="flex flex-1 flex-col items-center font-sans">
+    <div class="flex flex-1 flex-col items-center font-sans mb-12">
 
       <div class="md:mx-10 sm:mx-12 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
 
@@ -123,11 +123,57 @@
             </tbody>
           </table>
           @else
-            <div class='flex flex-row items-center justify-center pt-5'>
-              <h3 class="text-grey-dark">Nenhum lançamento encontrado para os ultimos 30 dias</h3>
-            </div>
+          <div class='flex flex-row items-center justify-center pt-5'>
+            <h3 class="text-grey-dark">Nenhum lançamento encontrado para os ultimos 30 dias</h3>
+          </div>
           @endif
         </div>
+
+        @if($funcionario->hasFolhaThisMonth())
+        <div class='flex flex-row items-center justify-center pt-5'>
+          <a href="{{ url('/folha/'.$funcionario->getLatestFolha()->folhalog_id) }}" class="flex-no-shrink no-underline p-2 border-2 rounded text-blue border-blue hover:text-white hover:bg-blue">Visualizar Folha deste Mês</a>
+        </div>
+        @else
+        <div class="-mx-1 flex-col md:flex mb-6">
+          <div class='flex mb-6'>
+            <h1 class="text-grey-darkest">Horas Extras e Comissão</h1>
+          </div>
+          <form id="folhaForm" action="{{ url('/folha/add') }}" method="POST">
+            @csrf
+            <input type='hidden' name='folhalog_funcionario' value="{{ $funcionario->funcionario_id }}"/>
+
+            <div class="-mx-3 md:flex mb-6">
+              <div class="md:w-1/2 px-3 sm:mb-5">
+                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                  Hora Extra (50%)
+                </label>
+                <input type="number" name="hora_extra_50" min="0" value="0" step="1" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+              </div>
+              <div class="md:w-1/2 px-3 sm:mb-5">
+                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                  Hora Extra (100%)
+                </label>
+                <input type="number" name="hora_extra_100" min="0" value="0" step="1" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" >
+              </div>
+            </div>
+
+            <div class="-mx-3 md:flex mb-6">
+              <div class="md:w-1/2 px-3 sm:mb-5">
+                <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                  Comissão (R$)
+                </label>
+                <input type="number" name="comissao" min="0" value="0" step="0.01" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+              </div>
+            </div>
+
+            <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
+            <button type="submit" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green">
+              Confirmar dados e emitir folha de pagamento
+            </button>
+          </div>
+          </form>
+        </div>
+        @endif
 
       </div>
 
