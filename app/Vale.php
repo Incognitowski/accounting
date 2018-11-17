@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Vale extends Model
 {
@@ -15,5 +16,21 @@ class Vale extends Model
         "vale_data",
         "vale_valor"
     ];
+
+    public function readableDate(){
+
+    	$date = Carbon::createFromFormat('Y-m-d', $this->vale_data);
+
+    	return $date->format('d/m/Y');
+
+    }
+
+    public function readableValue(){
+
+    	$value = number_format($this->vale_valor, 2, ',', '.');
+
+    	return "R$ " . $value;
+
+    }
 
 }

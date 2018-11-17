@@ -20,4 +20,8 @@ class Funcionario extends Model
         "funcionario_abate_inss",
     ];
 
+    public function vales(){
+        return $this->hasMany('App\Vale','vale_funcionario','funcionario_id');
+    }
+
 }
