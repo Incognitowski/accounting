@@ -5,18 +5,16 @@ namespace App;
 class INSSCalculator
 {
     public $inss;
-    public $funcionario;
     public $salario;
 
-    function __construct($inss, $funcionario, $salario){
+    function __construct($inss, $salario){
     	$this->inss = $inss;
-    	$this->funcionario = $funcionario;
     	$this->salario = $salario;
     }
 
     public function getINSSRow(){
 
-    	$dados = json_decode($inss->inss_dados);
+    	$dados = json_decode($this->inss->inss_dados);
 
     	foreach ($dados as $inss) {
     		if($this->salario>$inss->min && $this->salario<$inss->max){
