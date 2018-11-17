@@ -12,6 +12,11 @@
   <script type='text/javascript'>
     $(document).ready(function(){
 
+      var deleteValeBaseUrl = "{{ url('/vale') }}";
+
+      $("#deleteModal").iziModal();
+      $('#addValeModal').iziModal();
+
       $('#funcionarioForm').ajaxForm({
         dataType: 'json',
         success: function(data){
@@ -26,6 +31,54 @@
             message: 'Um erro ocorreu.',
           });
         }
+      });
+
+      $('.btn-delete-vale').on('click',function(target){
+          event.preventDefault();
+
+          var deleteValeUrl = deleteValeBaseUrl + '/' + target.currentTarget.dataset.idVale; 
+
+          $('#deleteValeForm').attr('action',deleteValeUrl);
+
+          $('#deleteModal').iziModal('setZindex', 99999);
+          $('#deleteModal').iziModal('open');
+
+      });
+
+      $('#deleteValeForm').ajaxForm({
+        dataType: 'json',
+        success: function(data){
+          if(data.success){
+            location.reload();
+          }else{
+            alert(data.msg);
+            $('#deleteModal').iziModal('close');
+          }
+        },
+        error: function(data){
+          alert('Ocorreu um erro ao cancelar este vale.');
+        }
+      });
+
+      $('#addValeForm').ajaxForm({
+        dataType: 'json',
+        success: function(data){
+          if(data.success){
+            location.reload();
+          }else{
+            alert(data.msg);
+            $('#addValeModal').iziModal('close');
+          }
+        },
+        error: function(data){
+          alert('Ocorreu um erro ao inserir este vale.');
+        }
+      });
+
+      $('#new-vale').on('click',function(){
+        event.preventDefault();
+        $('#addValeModal').iziModal('setZindex', 99999);
+        $('#addValeModal').iziModal('open');
       });
 
     });
@@ -131,38 +184,119 @@
         </form>
       </div>
 
-      <div class="md:mx-10 sm:mx-12 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2 mb-12">
+      <div class="md:mx-10 sm:mx-12 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
         <div class='flex items-center justify-between w-full pb-6'>
           <h3 class="text-grey-darkest ml-3">Vales</h3>
           <button id="new-vale" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" type="button">Adicionar Vale</button>
         </div>
-          <div id='vale_table_container'>
-            @foreach($funcionario->vales as $vale)
+        <div id='vale_table_container'>
+          @foreach($funcionario->vales as $vale)
 
-              <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
-                <div class="flex-1 px-3">
-                  <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                    Data
-                  </label>
-                  <input readonly value="{{ $vale->readableDate() }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
-                </div>
+          <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
+            <div class="flex-1 px-3">
+              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                Data
+              </label>
+              <input readonly value="{{ $vale->readableDate() }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+            </div>
 
-                <div class="flex-1 px-3">
-                  <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
-                    Valor (R$)
-                  </label>
-                  <input readonly value="{{ $vale->readableValue() }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
-                </div>
+            <div class="flex-1 px-3">
+              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                Valor (R$)
+              </label>
+              <input readonly value="{{ $vale->readableValue() }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+            </div>
 
-                <div class='px-3 mt-5'>
-                  <button type="button" class="btn-delete-vale flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
-                </div>
-              </div>
-
-            @endforeach
+            <div class='px-3 mt-5'>
+              <button type="button" data-id-folha="{{ $vale->vale_id }}" class="btn-delete-vale flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
+            </div>
           </div>
+
+          @endforeach
+        </div>
+      </div>
+
+      <div class="md:mx-10 sm:mx-12 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2 mb-12">
+        <div class='flex items-center justify-between w-full pb-6'>
+          <h3 class="text-grey-darkest ml-3">Folhas de Pagamento</h3>
+          <a href="{{ url('/folha/add/'.$funcionario->funcionario_id) }}" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green">Emitir Folha de Pagamento</a>
+        </div>
+        <div id='vale_table_container'>
+          @foreach($funcionario->folhas_de_pagamento as $folha)
+
+          <div class="data-field-parent flex pb-6 items-center justify-around border-grey">
+            <div class="flex-1 px-3">
+              <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                Data
+              </label>
+              <input readonly value="{{ $folha->readableDate() }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+            </div>
+
+            <div class='px-3 mt-5'>
+              <a href="{{ url('/folha/'.$folha->folhalog_id) }}" class="flex-no-shrink no-underline p-2 border-2 rounded text-blue border-blue hover:text-white hover:bg-blue">Visualizar</a>
+            </div>
+
+            <div class='px-3 mt-5'>
+              <button type="button" data-id-folha="{{ $folha->folhalog_id }}" class="btn-delete-folha flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
+            </div>
+          </div>
+
+          @endforeach
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+<div id="deleteModal">
+  <div class='flex flex-col p-10 items-center'>
+    <h1 class="text-grey-darkest pb-5">Deseja cancelar este vale?</h1>
+    <div class='flex justify-around'>
+      <form id='deleteValeForm' method="POST">
+        @method('DELETE')
+        @csrf
+        <div class='flex justify-around'>
+          <button type='submit' class="flex-no-shrink p-2 ml-2 border-2 rounded text-green border-green hover:text-white hover:bg-green">Confirmar Exclusão</button>
+          <button data-iziModal-close class="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-</body>
+
+<div id="addValeModal">
+  <div class='flex flex-col p-10 items-center'>
+    <h1 class="text-grey-darkest pb-5">Emitir Novo Vale</h1>
+    <div class='flex justify-around'>
+      <form id='addValeForm' method="POST" action="{{ url('/vale') }}">
+        @csrf
+
+        <input type='hidden' name='vale_funcionario' value="{{ $funcionario->funcionario_id }}" />
+
+        <div class="flex-1 px-3 mb-3">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+            Data
+          </label>
+          <input type="date" name="vale_data" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+        </div>
+
+        <div class="flex-1 px-3 mb-3">
+          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+            Valor (R$)
+          </label>
+          <input type="number" name="vale_valor" min="0" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
+        </div>
+
+        <div class='flex justify-around'>
+          <button type='submit' class="flex-no-shrink p-2 ml-2 border-2 rounded text-green border-green hover:text-white hover:bg-green">Confirmar Vale</button>
+          <button data-iziModal-close class="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 </html>
+
+

@@ -4,13 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Funcionario;
-use App\INSS;
-use App\IRRF;
-use App\SalarioFamilia;
 use App\FolhaLog;
-use App\Parametro;
 use App\Vale;
-use App\Feriado;
 use Carbon\Carbon;
 
 class FuncionarioController extends Controller

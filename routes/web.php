@@ -79,3 +79,17 @@ Route::prefix('funcionario')->group(function () {
     Route::delete('/{funcionario}','FuncionarioController@delete');
 
 });
+
+Route::prefix('vale')->group(function () {
+
+    Route::delete('/{vale}','ValeController@delete');
+    Route::post('/','ValeController@add');
+
+});
+
+Route::prefix('folha')->group(function() {
+
+    Route::get('add/{funcionario}','FolhaController@add');
+    Route::get('{folha}','FolhaController@view');
+
+});

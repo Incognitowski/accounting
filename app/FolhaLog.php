@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class FolhaLog extends Model
 {
     protected $table = "folhalog";
@@ -15,4 +17,12 @@ class FolhaLog extends Model
         "folhalog_data",
         "folhalog_dados"
     ];
+
+    public function readableDate(){
+
+    	$date = Carbon::createFromFormat('Y-m-d', $this->folhalog_data);
+
+    	return $date->month . "/" . $date->year;
+
+    }
 }
