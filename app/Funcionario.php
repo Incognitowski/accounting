@@ -66,4 +66,23 @@ class Funcionario extends Model
         return $latest_folha;                      
     }
 
+    public function getHoraExtra50(){
+        $valor_hora = $this->funcionario_salario_base / 220;
+
+        $valor_hora = $valor_hora + ($valor_hora/2);
+
+        return $valor_hora;
+
+    }
+
+    public function getHoraExtra100(){
+        $valor_hora = $this->funcionario_salario_base / 220;
+
+        $valor_hora = $valor_hora * 2;
+
+        return $valor_hora;
+
+    }
+
+
 }

@@ -94,3 +94,5 @@ Route::prefix('folha')->group(function() {
     Route::get('{folha}','FolhaController@view');
 
 });
+
+Route::get('/teste','ViewController@dateTest');
