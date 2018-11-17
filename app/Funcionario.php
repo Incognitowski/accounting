@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Funcionario extends Model
 {
-    protected $table = "Funcionario";
-    protected $primaryKey = "Funcionario_id";
+    protected $table = "funcionario";
+    protected $primaryKey = "funcionario_id";
     public $timestamps = false;
 
     protected $fillable = [
-        "Funcionario_nome",
-        "Funcionario_cargo",
-        "Funcionario_dependentes",
-        "Funcionario_insalubridade",
-        "Funcionario_salario_base",
-        "Funcionario_filhos_menores",
-        "Funcionario_abate_inss",
+        "funcionario_nome",
+        "funcionario_cargo",
+        "funcionario_dependentes",
+        "funcionario_insalubridade",
+        "funcionario_salario_base",
+        "funcionario_filhos_menores",
+        "funcionario_abate_inss",
     ];
 
 }

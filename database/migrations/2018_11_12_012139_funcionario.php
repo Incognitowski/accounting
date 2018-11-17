@@ -22,9 +22,9 @@ class Funcionario extends Migration
                 Funcionario_insalubridade integer NOT NULL,
                 Funcionario_salario_base float NOT NULL,
                 Funcionario_filhos_menores integer NOT NULL,
+                Funcionario_inativo boolean NOT NULL DEFAULT false,
                 Funcionario_abate_inss boolean NOT NULL DEFAULT false,
                 CONSTRAINT Funcionario_pk PRIMARY KEY (Funcionario_id)
-            
             );
         ");
     }

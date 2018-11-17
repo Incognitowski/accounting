@@ -41,7 +41,19 @@
       <div class="pl-2">Nova Conta</div>
     </a>
 
-    <!-- SECTION 4 -->
+    <!-- SECTION 5 -->
+    <div class="uppercase tracking-wide text-c2 mb-1 mt-4">Funcionário</div>
+    <a href="{{ url('/funcionario') }}" class="no-underline text-grey-darkest flex-no-shrink flex cursor-pointer border px-4 border-b-0 py-2 text-lg text-grey-darkest md:text-base" style="border-left: 4px solid #de751f !important;">
+      <div class="pl-2">Gerenciar Funcionários</div>
+    </a>
+    <a href="{{ url('/funcionario/add') }}" class="no-underline text-grey-darkest flex-no-shrink flex cursor-pointer border px-4 py-2 text-lg text-grey-darkest md:text-base" style="border-left: 4px solid #de751f !important;">
+      <div class="pl-2">Novo Funcionário</div>
+    </a>
+    <a href="{{ url('/vales') }}" class="no-underline text-grey-darkest flex-no-shrink flex cursor-pointer border px-4 py-2 text-lg text-grey-darkest md:text-base" style="border-left: 4px solid #de751f !important;">
+      <div class="pl-2">Vales</div>
+    </a>
+
+    <!-- SECTION 6 -->
     <div class="uppercase tracking-wide text-c2 mb-1 mt-4" >Relatórios</div>
     <a href="{{ url('/relatorio') }}" class="no-underline text-grey-darkest flex-no-shrink flex cursor-pointer border px-4 py-2 text-lg text-grey-darkest md:text-base" style="border-left: 4px solid #a779e9 !important;">
       <div class="pl-2">Gerar Relatório</div>

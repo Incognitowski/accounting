@@ -25,7 +25,5 @@ class ParametroController extends Controller
     	}else{
     		return response()->json(['success'=>false]);
     	}
-
-
     }
 }

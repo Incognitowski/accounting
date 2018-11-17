@@ -68,3 +68,14 @@ Route::post('inss','INSSController@add');
 Route::post('irrf','IRRFController@add');
 Route::post('salario_familia','SalarioFamiliaController@add');
 Route::post('parametros','ParametroController@add');
+
+Route::prefix('funcionario')->group(function () {
+
+    Route::get('/','FuncionarioController@view');
+    Route::get('/add','FuncionarioController@addView');
+    Route::post('/','FuncionarioController@add');
+    Route::get('/{funcionario}','FuncionarioController@viewFuncionario');
+    Route::put('/{funcionario}','FuncionarioController@update');
+    Route::delete('/{funcionario}','FuncionarioController@delete');
+
+});
