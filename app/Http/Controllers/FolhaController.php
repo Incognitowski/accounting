@@ -10,6 +10,7 @@ use App\IRRF;
 use App\SalarioFamilia;
 use App\Feriado;
 use App\FolhaLog;
+use App\DateCalculator;
 use Carbon\Carbon;
 
 class FolhaController extends Controller
@@ -25,6 +26,14 @@ class FolhaController extends Controller
     	$folhalog = new FolhaLog();
     	$parametros = Parametro::getLatest();
     	$funcionario = Funcionario::find((int) $req->input('folhalog_funcionario'));
+        $inss = INSS::getLatest();
+        $irrf = IRRF::getLatest();
+        $salario_familia = SalarioFamilia::getLatest();
+
+        $feriados = Feriados::getFromCurrentYear();
+        $start = new Carbon('first day of this month');
+        $end = new Carbon('last day of this month');
+        $calc = new DateCalculator($start, $end, $feriados); 
 
     	$folhalog->folhalog_data = Carbon::now()->toDateString();
     	$folhalog->folhalog_funcionario = $req->input('folhalog_funcionario');
@@ -57,6 +66,17 @@ class FolhaController extends Controller
 
     	$total_hora_extra = $valor_hora_extra_50 + $valor_hora_extra_100;
 
-    	
+        $dsr = $total_hora_extra / $calc->getUsefulDays() * $calc->getSundaysAndHolidays();
+
+        $log['dsr'] = $dsr;
+        $log['domingos_e_feriados'] = $calc->getSundaysAndHolidays(); 
+    	$log['dias_uteis'] = $calc->getUsefulDays();
+
+        $salario_final += $dsr;
+
+        $salario_base = $salario_final;
+
+
+
     }
 }

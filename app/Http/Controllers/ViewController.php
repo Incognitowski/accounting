@@ -252,17 +252,4 @@ class ViewController extends Controller
 
     } 
 
-    public function dateTest(){
-      $feriados = Feriado::getFromCurrentYear();
-      $start = new Carbon('first day of this month');
-      $end = new Carbon('last day of this month');
-
-      $calc = new DateCalculator($start->toDateString(), $end->toDateString(), $feriados);
-
-      echo $calc->getUsefulDays();
-      echo "<br>";
-      echo $calc->getSundaysAndHolidays();
-
-    }
-
 }
