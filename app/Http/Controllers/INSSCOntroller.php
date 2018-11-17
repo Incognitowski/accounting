@@ -10,7 +10,7 @@ class INSSController extends Controller
 {
     public function add(Request $req){
 
-    	$inss = INSS::orderBy('inss_data_inicio', 'desc')->first();
+    	$inss = INSS::orderBy('inss_data_inicio', 'desc')->where('inss_data_fim',null)->first();
     	$inss->inss_data_fim = Carbon::now()->toDateString();
     	$inss->save();
 

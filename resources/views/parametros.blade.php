@@ -175,7 +175,7 @@
           }
         },
         error: function(data){
-          alert('Ocorreu um erro ao atualizar os feriados.');
+          alert('Ocorreu um erro ao atualizar o INSS.');
         }
       });
 
@@ -199,7 +199,55 @@
           }
         },
         error: function(data){
-          alert('Ocorreu um erro ao atualizar os feriados.');
+          alert('Ocorreu um erro ao atualizar o IRRF.');
+        }
+      });
+
+      $('#form_parametro').ajaxForm({
+        dataType: 'json',
+        success: function(data){
+          if(data.success){
+
+            iziToast.success({
+              title: 'OK',
+              message: 'Parâmetros atualizados com sucesso.',
+            });
+
+          }else{
+
+            iziToast.error({
+              title: 'Erro',
+              message: 'Não foi possível atualizar os parâmetros.',
+            });
+
+          }
+        },
+        error: function(data){
+          alert('Ocorreu um erro ao atualizar os parâmetros.');
+        }
+      });
+
+      $('#form_salfam').ajaxForm({
+        dataType: 'json',
+        success: function(data){
+          if(data.success){
+
+            iziToast.success({
+              title: 'OK',
+              message: 'Tabela de Salario Família atualizada com sucesso.',
+            });
+
+          }else{
+
+            iziToast.error({
+              title: 'Erro',
+              message: 'Erro ao atualizar a tabela de salário família.',
+            });
+
+          }
+        },
+        error: function(data){
+          alert('Ocorreu um erro ao atualizar a tabela do salário família.');
         }
       });
 
@@ -220,7 +268,7 @@
       <!-- FORM FOR PARAMETER TABLE -->
       <div class="md:mx-10 sm:mx-12 bg-white container shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-10 flex flex-col my-2">
         <div class='self-center mx-auto mb-5'><h1 class='text-grey-darkest'>Parâmetros</h1></div>
-        <form method="POST" action="{{ url('/parametro') }}" id="form_parametro">
+        <form method="POST" action="{{ url('/parametros') }}" id="form_parametro">
           @csrf
 
           <div class='flex flex-row'>
@@ -245,7 +293,7 @@
             <input name='fgts' value="{{ $parametro->parametro_fgts * 100 }}" required class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" type="number" min="0" max="100" step="0.01">
           </div>
           <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
-            <button id="update_parametro" type="button" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
+            <button id="update_parametro" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
             type='submit'>
             Atualizar
           </button>
@@ -269,7 +317,7 @@
         </div>
 
         <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
-          <button id="update_inss" type="submit" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
+          <button id="update_inss" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
           type='submit'>
           Atualizar
         </button>
@@ -289,7 +337,7 @@
       <div id='irrf_table_container'></div>
 
       <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
-        <button id="update_irrf" type="submit" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
+        <button id="update_irrf" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
         type='submit'>
         Atualizar
       </button>
@@ -310,7 +358,7 @@
     <div id='salfam_table_container'></div>
 
     <div class='flex flex-row border-t border-grey justify-end pt-5 pr-5'>
-      <button id="update_salfam" type="button" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
+      <button id="update_salfam" class="flex-no-shrink no-underline p-2 border-2 rounded text-green border-green hover:text-white hover:bg-green" 
       type='submit'>
       Atualizar
     </button>

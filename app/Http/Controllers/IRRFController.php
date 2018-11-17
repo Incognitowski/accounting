@@ -10,7 +10,7 @@ class IRRFController extends Controller
 {
     public function add(Request $req){
 
-    	$irrf = IRRF::orderBy('irrf_data_inicio', 'desc')->first();
+    	$irrf = IRRF::orderBy('irrf_data_inicio', 'desc')->where('irrf_data_fim',null)->first();
     	$irrf->irrf_data_fim = Carbon::now()->toDateString();
     	$irrf->save();
 
