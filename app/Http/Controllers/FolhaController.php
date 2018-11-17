@@ -134,6 +134,8 @@ class FolhaController extends Controller
 
         $log['salario_liquido'] = $salario_final; 
 
+        //COLOCAR FGTS
+
         dd($log);
 
     }
