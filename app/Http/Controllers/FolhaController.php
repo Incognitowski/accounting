@@ -94,6 +94,8 @@ class FolhaController extends Controller
 
             $log['inss_valor'] = 0;
 
+            $valor_inss = 0;
+
         }else{
 
             $inss_faixa = $calc_inss->getINSSRow();
