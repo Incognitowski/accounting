@@ -235,10 +235,7 @@
             <div class='px-3 mt-5'>
               <a href="{{ url('/folha/'.$folha->folhalog_id) }}" class="flex-no-shrink no-underline p-2 border-2 rounded text-blue border-blue hover:text-white hover:bg-blue">Visualizar</a>
             </div>
-
-            <div class='px-3 mt-5'>
-              <button type="button" data-id-folha="{{ $folha->folhalog_id }}" class="btn-delete-folha flex-no-shrink no-underline p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">Excluir</button>
-            </div>
+            
           </div>
 
           @endforeach

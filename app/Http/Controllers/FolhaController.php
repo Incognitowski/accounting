@@ -64,13 +64,15 @@ class FolhaController extends Controller
         $valor_hora_extra_100 = $hora_extra_100 * ((int) $req->input('hora_extra_100'));
 
         $log['qtd_h_ex_100'] = (int) $req->input('hora_extra_100');
-        $log['vakir_h_ex_100'] = $valor_hora_extra_100;
+        $log['valor_h_ex_100'] = $valor_hora_extra_100;
 
         $log['qtd_h_ex_50'] = (int) $req->input('hora_extra_50');
-        $log['vakir_h_ex_50'] = $valor_hora_extra_50;
+        $log['valor_h_ex_50'] = $valor_hora_extra_50;
 
         $salario_final+= $valor_hora_extra_100;
         $salario_final+= $valor_hora_extra_50;
+
+        $log['total_hora_extra'] = $valor_hora_extra_100 + $valor_hora_extra_50;
 
         $total_hora_extra = $valor_hora_extra_50 + $valor_hora_extra_100;
 
@@ -153,7 +155,45 @@ class FolhaController extends Controller
 
         $log['fgts_porcentagem'] = $parametros->parametro_fgts * 100;
 
-        dd($log);
+        $folhalog->folhalog_dados = json_encode($log);
+
+        if($folhalog->save()){
+            return redirect('folha/'.$folhalog->folhalog_id);
+        }else{
+            return response()->json(['success'=>false]);
+        }
+    }
+
+    public function view(FolhaLog $folha){
+
+        $funcionario = Funcionario::find($folha->folhalog_funcionario);
+
+        $folha_dados = json_decode($folha->folhalog_dados);
+
+        $vales = [];
+
+        foreach ($folha_dados->vales as $vale) {
+            $vale_instance = new Vale();
+            $vale_instance->vale_valor = $vale->vale_valor;
+            $vale_instance->vale_data = $vale->vale_data; 
+            $vales[] = $vale_instance;
+        }
+
+        $format_function = function($value) {
+            $value = number_format($value, 2, ',', '.');
+
+            return "R$ " . $value;
+        };
+
+        $data = [
+            'folha' => $folha_dados,
+            'funcionario' => $funcionario,
+            'vales' => $vales,
+            'money_format' => $format_function,
+            'salario' => 0
+        ];
+
+        return view('view-folha', $data);
 
     }
 }

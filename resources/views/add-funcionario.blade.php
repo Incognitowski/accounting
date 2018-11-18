@@ -11,7 +11,7 @@
         $('#funcionarioForm').ajaxForm({
             dataType: 'json',
             success: function(data){
-              window.location.reload();
+              window.location.replace(data.funcionario);
             },
             error: function(data){
               alert('Ocorreu um erro ao atualizar este funcionário.');
