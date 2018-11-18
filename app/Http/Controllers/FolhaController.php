@@ -88,15 +88,26 @@ class FolhaController extends Controller
 
         $calc_inss = new INSSCalculator($inss_table, $salario_base);
 
-        $inss_faixa = $calc_inss->getINSSRow();
+        if(!$funcionario->funcionario_recolhe_inss){
 
-        $log['inss_faixa'] = $inss_faixa;
+            $log['inss_faixa'] = ['min'=>0,'max'=>0,'aliquota'=>0];
 
-        $valor_inss = $calc_inss->getINSS();
+            $log['inss_valor'] = 0;
 
+        }else{
+
+            $inss_faixa = $calc_inss->getINSSRow();
+
+            $log['inss_faixa'] = $inss_faixa;
+
+            $valor_inss = $calc_inss->getINSS();
+
+            $log['inss_valor'] = $valor_inss;
+
+        }
+
+        
         $calc_irrf = new IRRFCalculator($irrf_table, $funcionario, $valor_inss, $salario_base, $parametros);
-
-        $log['inss_valor'] = $valor_inss;
 
         $salario_final -= $valor_inss;
 
