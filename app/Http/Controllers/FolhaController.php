@@ -134,7 +134,11 @@ class FolhaController extends Controller
 
         $log['salario_liquido'] = $salario_final; 
 
-        //COLOCAR FGTS
+        $fgts = $salario_final * $parametros->parametro_fgts;
+
+        $log['fgts'] = $fgts;
+
+        $log['fgts_porcentagem'] = $parametros->parametro_fgts * 100;
 
         dd($log);
 
