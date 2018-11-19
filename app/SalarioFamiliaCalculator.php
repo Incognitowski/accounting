@@ -36,7 +36,7 @@ class SalarioFamiliaCalculator
     		return 0;
     	}
 
-    	$salfam_valor = $salfam_valor * $funcionario->funcionario_filhos_menores;
+    	$salfam_valor = $salfam_valor * $this->funcionario->funcionario_filhos_menores;
 
     	return $salfam_valor;
 
