@@ -38,7 +38,7 @@ class ViewController extends Controller
         $balanco = $balanco - $custo->lancamento_valor;
       }
 
-      $balanco = number_format((float)$balanco, 2, ',', '.');
+      $balanco = number_format($balanco, 2, ',', '.');
 
       $data = [
         'custos'=>$custos,
@@ -157,7 +157,7 @@ class ViewController extends Controller
 
       $balanco = $balanco - $depreciacao_imobilizados;
 
-      $balanco = number_format((float)$balanco, 2, ',', '.');
+      $balanco = number_format($balanco, 2, ',', '.');
 
       $inicio = Carbon::createFromFormat('Y-m-d',$inicio);
       $final = Carbon::createFromFormat('Y-m-d',$final);
@@ -203,7 +203,7 @@ class ViewController extends Controller
 
       $balanco = $balanco - $depreciacao_imobilizados;
 
-      $balanco = number_format((float)$balanco, 2, ',', '.');
+      $balanco = number_format($balanco, 2, ',', '.');
 
       $inicio = Carbon::createFromFormat('Y-m-d',$inicio);
       $final = Carbon::createFromFormat('Y-m-d',$final);

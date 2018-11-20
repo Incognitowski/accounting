@@ -19,7 +19,7 @@ class FeriadoController extends Controller
     		$feriados[] = $feriado;
     	}
 
-		Feriado::whereYear('feriado_data',Carbon::now()->year)->delete();
+		Feriado::whereYear('feriado_data',(string)Carbon::now()->year)->delete();
 
     	foreach ($feriados as $feriado) {
     		Feriado::whereDate('feriado_data',$feriado['data'])->delete();

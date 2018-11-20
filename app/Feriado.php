@@ -19,6 +19,6 @@ class Feriado extends Model
 
 
     public static function getFromCurrentYear(){
-    	return Feriado::whereYear('feriado_data',Carbon::now()->year)->get();
+    	return Feriado::whereYear('feriado_data',(string) Carbon::now()->year)->get();
     }
 }
